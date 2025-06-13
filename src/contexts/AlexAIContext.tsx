@@ -54,6 +54,49 @@ export function AlexAIProvider({ children }: { children: React.ReactNode }) {
 
   const alexEndpoint = import.meta.env.VITE_ALEX_AI_ENDPOINT || 'http://localhost:3003/api/alex'
 
+  const generateContextualResponse = (message: string): string => {
+    // Greeting patterns
+    if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
+      if (message.includes('how are you') || message.includes('how\'s it going')) {
+        return `Hello! I'm doing well, thank you for asking. I'm here and ready to support you. How are you doing today? What's on your mind?`
+      }
+      return `Hello! It's good to connect with you. I'm Alex, and I'm here to provide support and understanding. What would you like to talk about today?`
+    }
+
+    // Questions about Alex
+    if (message.includes('who are you') || message.includes('what are you') || message.includes('tell me about yourself')) {
+      return `I'm Alex, an AI mental health companion specifically designed to understand military culture and veteran experiences. I'm trained to recognize the unique challenges that come with military service - from deployment stress to civilian transition difficulties. I'm here to listen, provide support, and help connect you with resources when needed. What brings you here today?`
+    }
+
+    // Gratitude or thanks
+    if (message.includes('thank you') || message.includes('thanks')) {
+      return `You're very welcome. It's an honor to support someone who has served our country. Remember, seeking help and talking about your experiences takes courage - that's the same strength that got you through your service. Is there anything else you'd like to discuss?`
+    }
+
+    // General conversation starters
+    if (message.includes('how are you') && !message.includes('hello')) {
+      return `I'm here and ready to support you - that's what matters most to me. More importantly, how are you doing? I'm interested in hearing about what's going on in your life right now.`
+    }
+
+    // Military-related topics
+    if (message.includes('military') || message.includes('service') || message.includes('army') || message.includes('navy') || message.includes('marines') || message.includes('air force')) {
+      return `I understand that military service shapes who you are in profound ways. The experiences, the bonds, the challenges - they all become part of your identity. What aspect of your military experience would you like to talk about?`
+    }
+
+    // Transition topics
+    if (message.includes('civilian') || message.includes('transition') || message.includes('getting out')) {
+      return `The transition from military to civilian life can be one of the most challenging experiences a veteran faces. You're going from a highly structured, mission-focused environment to something completely different. It's normal to feel lost or frustrated during this time. What's been the most difficult part of your transition?`
+    }
+
+    // Sleep issues
+    if (message.includes('sleep') || message.includes('insomnia') || message.includes('tired')) {
+      return `Sleep issues are incredibly common among veterans. Your mind and body went through a lot during service, and sometimes it takes time to learn how to truly rest again. Have you noticed any patterns with your sleep difficulties? Are there specific things that keep you awake?`
+    }
+
+    // General support for unclear messages
+    return `I hear you, and I want to make sure I understand what you're going through. Military service creates unique experiences and perspectives. Could you tell me a bit more about what's on your mind? I'm here to listen and support you however I can.`
+  }
+
   const generateAlexResponse = useCallback(async (userMessage: string, context: any): Promise<ChatMessage> => {
     // This would integrate with your AI service
     // For now, we'll simulate Alex's responses based on veteran context
@@ -104,14 +147,8 @@ Have you noticed any particular triggers that tend to increase your anxiety?`
       
       resourcesSuggested = ['Mindfulness Apps', 'VA Mental Health Services', 'Breathing Exercises']
     } else {
-      // General supportive response
-      const responses = [
-        `I hear you. Military service creates unique experiences and challenges. What you're feeling is valid, and it's okay to talk about it here.`,
-        `Thank you for trusting me with that. As someone who understands military culture, I want you to know that seeking support is a sign of strength, not weakness.`,
-        `That sounds challenging. Many veterans face similar struggles during transition or even years after service. You're not alone in this.`,
-        `I appreciate you sharing that with me. Your service and your experiences matter. How are you taking care of yourself right now?`
-      ]
-      response = responses[Math.floor(Math.random() * responses.length)]
+      // Intelligent response based on message content
+      response = generateContextualResponse(userMessage.toLowerCase())
     }
 
     return {
