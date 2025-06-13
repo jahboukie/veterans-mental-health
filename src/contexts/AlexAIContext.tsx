@@ -125,7 +125,12 @@ Have you noticed any particular triggers that tend to increase your anxiety?`
   }, [])
 
   const sendMessage = async (content: string) => {
-    if (!user || !currentSession) return
+    // Allow chat in development mode even without authentication
+    const isDevelopmentMode = window.location.pathname.startsWith('/dev')
+    if (!isDevelopmentMode && (!user || !currentSession)) return
+    if (isDevelopmentMode && !currentSession) {
+      await startSession()
+    }
 
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
@@ -177,7 +182,9 @@ Have you noticed any particular triggers that tend to increase your anxiety?`
   }
 
   const startSession = async () => {
-    if (!user) return
+    // Allow session start in development mode even without authentication
+    const isDevelopmentMode = window.location.pathname.startsWith('/dev')
+    if (!isDevelopmentMode && !user) return
 
     const session: AlexSession = {
       id: Date.now().toString(),
@@ -189,10 +196,14 @@ Have you noticed any particular triggers that tend to increase your anxiety?`
     setCurrentSession(session)
     
     // Alex's greeting message
+    const isDevelopmentMode = window.location.pathname.startsWith('/dev')
+    const mockRank = isDevelopmentMode ? 'SSG' : null
+    const displayRank = profile?.rank || mockRank
+
     const greeting: ChatMessage = {
       id: Date.now().toString(),
       role: 'alex',
-      content: `Hello${profile?.rank ? ` ${profile.rank}` : ''}. I'm Alex, your AI mental health companion. I'm here to provide support and understanding as someone who gets military culture and the unique challenges veterans face.
+      content: `Hello${displayRank ? ` ${displayRank}` : ''}. I'm Alex, your AI mental health companion. I'm here to provide support and understanding as someone who gets military culture and the unique challenges veterans face.
 
 This is a safe, confidential space where you can share what's on your mind. Whether you're dealing with transition challenges, stress, or just need someone to talk to - I'm here to listen and help.
 

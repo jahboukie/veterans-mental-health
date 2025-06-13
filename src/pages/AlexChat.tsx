@@ -59,6 +59,10 @@ export default function AlexChat() {
     const messageText = message.trim()
     setMessage('')
 
+    console.log('Sending message:', messageText)
+    console.log('Current session:', currentSession)
+    console.log('Is development mode:', window.location.pathname.startsWith('/dev'))
+
     try {
       await sendMessage(messageText)
     } catch (error) {
@@ -144,7 +148,14 @@ export default function AlexChat() {
         <div className="flex items-center mb-2">
           <ShieldCheckIcon className="h-8 w-8 text-military-600 mr-3" />
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Alex - Your AI Companion</h1>
+            <h1 className="text-2xl font-bold text-gray-900">
+              Alex - Your AI Companion
+              {window.location.pathname.startsWith('/dev') && (
+                <span className="ml-2 text-sm bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
+                  DEV MODE
+                </span>
+              )}
+            </h1>
             <p className="text-gray-600">
               Military culture-aware mental health support • Available 24/7
             </p>
@@ -178,7 +189,7 @@ export default function AlexChat() {
             <div className="text-center py-8">
               <HeartIcon className="h-12 w-12 text-military-300 mx-auto mb-4" />
               <p className="text-gray-500 mb-2">
-                Welcome{profile?.rank ? `, ${profile.rank}` : ''}. I'm Alex, your AI mental health companion.
+                Welcome{profile?.rank ? `, ${profile.rank}` : window.location.pathname.startsWith('/dev') ? ', SSG' : ''}. I'm Alex, your AI mental health companion.
               </p>
               <p className="text-sm text-gray-400">
                 I understand military culture and am here to provide support. How are you feeling today?
