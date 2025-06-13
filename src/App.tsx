@@ -21,6 +21,9 @@ import Profile from './pages/Profile'
 import FamilySupport from './pages/FamilySupport'
 import ProviderNetwork from './pages/ProviderNetwork'
 
+// Development components
+import DevBypass from './components/DevBypass'
+
 function App() {
   return (
     <AuthProvider>
@@ -34,6 +37,12 @@ function App() {
                 <Route path="/" element={<Landing />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/crisis" element={<CrisisSupport />} />
+
+                {/* Development routes */}
+                <Route path="/dev" element={<DevBypass />} />
+                <Route path="/dev/dashboard" element={<Dashboard />} />
+                <Route path="/dev/alex" element={<AlexChat />} />
+                <Route path="/dev/assessment" element={<Assessment />} />
                 
                 {/* Protected routes with layout */}
                 <Route path="/onboarding" element={

@@ -1,11 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { createClient, User, Session } from '@supabase/supabase-js'
+import { User, Session } from '@supabase/supabase-js'
 import toast from 'react-hot-toast'
-
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://your-project.supabase.co'
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'your-anon-key'
-
-const supabase = createClient(supabaseUrl, supabaseAnonKey)
+import { supabase } from '../lib/supabase'
 
 interface AuthContextType {
   user: User | null

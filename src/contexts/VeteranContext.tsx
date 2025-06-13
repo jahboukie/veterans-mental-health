@@ -1,11 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useAuth } from './AuthContext'
-import { createClient } from '@supabase/supabase-js'
-
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL || 'https://your-project.supabase.co',
-  import.meta.env.VITE_SUPABASE_ANON_KEY || 'your-anon-key'
-)
+import { supabase } from '../lib/supabase'
 
 export interface VeteranProfile {
   id: string
