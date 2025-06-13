@@ -194,9 +194,8 @@ Have you noticed any particular triggers that tend to increase your anxiety?`
     }
 
     setCurrentSession(session)
-    
+
     // Alex's greeting message
-    const isDevelopmentMode = window.location.pathname.startsWith('/dev')
     const mockRank = isDevelopmentMode ? 'SSG' : null
     const displayRank = profile?.rank || mockRank
 
