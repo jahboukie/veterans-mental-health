@@ -84,6 +84,35 @@ export default function Auth() {
     }
   }
 
+  const handleDemoLogin = async () => {
+    setIsLoading(true)
+    try {
+      // Demo credentials
+      const demoEmail = 'demo.veteran@vetsupport.com'
+      const demoPassword = 'VetSupport2024!'
+
+      toast.success('Logging in with demo account...')
+      await signIn(demoEmail, demoPassword)
+      navigate(from, { replace: true })
+    } catch (error: any) {
+      // If demo account doesn't exist, create it
+      try {
+        toast.success('Creating demo account...')
+        await signUp(demoEmail, demoPassword, {
+          service_member: true,
+          app_name: 'veterans-mental-health',
+          demo_account: true
+        })
+        toast.success('Demo account created! You can now sign in.')
+      } catch (signUpError) {
+        console.error('Demo account creation error:', signUpError)
+        toast.error('Demo login failed. Please try the development bypass instead.')
+      }
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   const toggleMode = () => {
     setIsSignUp(!isSignUp)
     reset()
@@ -242,17 +271,55 @@ export default function Auth() {
                 <div className="w-full border-t border-gray-300" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Need immediate help?</span>
+                <span className="px-2 bg-white text-gray-500">Demo & Testing</span>
               </div>
             </div>
 
-            <div className="mt-6">
+            <div className="mt-6 space-y-3">
               <button
-                onClick={() => window.location.href = 'tel:988'}
-                className="w-full flex justify-center items-center py-2 px-4 border border-crisis-300 rounded-md shadow-sm bg-crisis-50 text-sm font-medium text-crisis-700 hover:bg-crisis-100"
+                type="button"
+                onClick={() => handleDemoLogin()}
+                disabled={isLoading}
+                className="w-full flex justify-center items-center py-2 px-4 border border-military-300 rounded-md shadow-sm bg-military-50 text-sm font-medium text-military-700 hover:bg-military-100 disabled:opacity-50"
               >
-                Veterans Crisis Line: 988
+                {isLoading ? (
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-military-600 mr-2"></div>
+                ) : null}
+                🎯 Demo Login (Test Account)
               </button>
+
+              <div className="text-center">
+                <span className="text-xs text-gray-500">or</span>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => window.location.href = '/dev'}
+                className="w-full flex justify-center items-center py-2 px-4 border border-honor-300 rounded-md shadow-sm bg-honor-50 text-sm font-medium text-honor-700 hover:bg-honor-100"
+              >
+                🚀 Development Bypass (No Auth)
+              </button>
+            </div>
+
+            <div className="mt-6">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300" />
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-white text-gray-500">Need immediate help?</span>
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <button
+                  type="button"
+                  onClick={() => window.location.href = 'tel:988'}
+                  className="w-full flex justify-center items-center py-2 px-4 border border-crisis-300 rounded-md shadow-sm bg-crisis-50 text-sm font-medium text-crisis-700 hover:bg-crisis-100"
+                >
+                  Veterans Crisis Line: 988
+                </button>
+              </div>
             </div>
           </div>
         </div>

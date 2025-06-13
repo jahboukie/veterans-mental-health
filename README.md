@@ -123,6 +123,28 @@ A specialized mental health support platform designed specifically for military 
 
    The application will be available at `http://localhost:3014`
 
+## 🎯 Demo & Testing Options
+
+### Option 1: Demo Login (Full Authentication Flow)
+- **URL:** http://localhost:3014/auth
+- **Email:** `demo.veteran@vetsupport.com`
+- **Password:** `VetSupport2024!`
+- **Features:** Complete authentication, onboarding, and Supabase integration
+
+### Option 2: Development Bypass (No Authentication)
+- **URL:** http://localhost:3014/dev
+- **Features:** Instant access to all features with mock data
+- **Quick Links:**
+  - Dashboard: http://localhost:3014/dev/dashboard
+  - Alex AI Chat: http://localhost:3014/dev/alex
+  - Assessments: http://localhost:3014/dev/assessment
+
+### Testing Notes
+- **Demo Login:** Tests the full authentication flow with Supabase
+- **Development Bypass:** Skips authentication entirely for quick feature testing
+- **Mock Data:** Realistic veteran service history and assessment data included
+- **Alex AI:** Requires Anthropic API key in `.env` file for full functionality
+
 ## 📱 Usage
 
 ### For Veterans
