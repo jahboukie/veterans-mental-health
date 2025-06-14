@@ -1,0 +1,110 @@
+{
+  "version": 2,
+  "name": "vetsupport-canada",
+  "alias": ["vetsupport.ca", "veterans-mental-health.vercel.app"],
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install",
+  "devCommand": "npm run dev",
+  "public": true,
+  "env": {
+    "VITE_SUPABASE_URL": "@vite_supabase_url",
+    "VITE_SUPABASE_ANON_KEY": "@vite_supabase_anon_key",
+    "VITE_ANTHROPIC_API_KEY": "@vite_anthropic_api_key",
+    "VITE_ECOSYSTEM_API_KEY": "@vite_ecosystem_api_key",
+    "VITE_SENTIMENT_SERVICE_URL": "@vite_sentiment_service_url",
+    "VITE_AI_ORCHESTRATION_URL": "@vite_ai_orchestration_url",
+    "VITE_ANALYTICS_ENGINE_URL": "@vite_analytics_engine_url",
+    "VITE_API_GATEWAY_URL": "@vite_api_gateway_url",
+    "VITE_APP_ENV": "production",
+    "VITE_APP_REGION": "canada"
+  },
+  "build": {
+    "env": {
+      "VITE_SUPABASE_URL": "@vite_supabase_url",
+      "VITE_SUPABASE_ANON_KEY": "@vite_supabase_anon_key",
+      "VITE_ANTHROPIC_API_KEY": "@vite_anthropic_api_key",
+      "VITE_ECOSYSTEM_API_KEY": "@vite_ecosystem_api_key",
+      "VITE_SENTIMENT_SERVICE_URL": "@vite_sentiment_service_url",
+      "VITE_AI_ORCHESTRATION_URL": "@vite_ai_orchestration_url",
+      "VITE_ANALYTICS_ENGINE_URL": "@vite_analytics_engine_url",
+      "VITE_API_GATEWAY_URL": "@vite_api_gateway_url",
+      "VITE_APP_ENV": "production",
+      "VITE_APP_REGION": "canada"
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://vetsupport.ca, https://family-support.vetsupport.ca"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization, X-App-Source"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/ecosystem/(.*)",
+      "destination": "https://ecosystem-api.yourdomain.com/api/$1"
+    },
+    {
+      "source": "/health",
+      "destination": "/api/health"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/demo",
+      "destination": "/?demo=true&region=canada",
+      "permanent": false
+    },
+    {
+      "source": "/famille",
+      "destination": "/family-support",
+      "permanent": false
+    }
+  ],
+  "functions": {
+    "app/api/**": {
+      "maxDuration": 30
+    }
+  },
+  "regions": ["yyz1", "iad1"],
+  "github": {
+    "enabled": true,
+    "autoAlias": true,
+    "silent": true
+  }
+}
