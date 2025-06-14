@@ -8,7 +8,10 @@ import {
 } from '@heroicons/react/24/outline'
 import { useVeteran } from '../contexts/VeteranContext'
 import { useCrisis } from '../contexts/CrisisContext'
+import { useAuth } from '../contexts/AuthContext'
 import toast from 'react-hot-toast'
+import VeteranSecureEncryption from '../lib/veteran-encryption'
+import CrisisSecurityProtocol from '../lib/crisis-security'
 
 // PCL-5 Questions (PTSD Checklist for DSM-5)
 const PCL5_QUESTIONS = [
@@ -69,8 +72,13 @@ export default function Assessment() {
   
   const { submitAssessment } = useVeteran()
   const { triggerCrisisAlert } = useCrisis()
+  const { user } = useAuth()
 
   const { register, handleSubmit, watch, reset } = useForm()
+  
+  // Initialize security systems
+  const encryption = new VeteranSecureEncryption()
+  const crisisSecurity = new CrisisSecurityProtocol()
 
   const calculatePCL5Score = (data: any) => {
     let total = 0
@@ -106,39 +114,76 @@ export default function Assessment() {
   }
 
   const onSubmit = async (data: any) => {
+    if (!user) {
+      toast.error('You must be logged in to complete assessments')
+      return
+    }
+
     setIsSubmitting(true)
     
     try {
       const pcl5Score = currentAssessment === 'pcl5' ? calculatePCL5Score(data) : null
       const phq9Score = currentAssessment === 'phq9' ? calculatePHQ9Score(data) : null
       
+      // Validate crisis assessment using security protocol
+      const crisisValidation = crisisSecurity.validateCrisisAssessment({
+        pcl5: pcl5Score || undefined,
+        phq9: phq9Score || undefined
+      })
+
       // Check for crisis indicators
       const suicidalThoughts = currentAssessment === 'phq9' && parseInt(data.phq9_8) >= 1
       
-      if (suicidalThoughts) {
-        triggerCrisisAlert('immediate', 'Suicidal ideation detected in assessment. Immediate support recommended.')
+      if (suicidalThoughts || crisisValidation.immediateIntervention) {
+        triggerCrisisAlert('immediate', 'Crisis indicators detected in assessment. Immediate support recommended.')
       }
 
-      const riskLevel = getRiskLevel(pcl5Score || 0, phq9Score || 0)
+      const riskLevel = crisisValidation.riskLevel
       
       const assessmentData = {
         pcl5_score: pcl5Score,
         phq9_score: phq9Score,
-        risk_level: riskLevel as 'low' | 'moderate' | 'high' | 'crisis',
-        recommendations: generateRecommendations(riskLevel, pcl5Score, phq9Score, suicidalThoughts)
+        risk_level: riskLevel,
+        crisis_indicators: crisisValidation.crisisIndicators,
+        recommendations: generateRecommendations(riskLevel, pcl5Score, phq9Score, suicidalThoughts),
+        assessment_type: currentAssessment === 'pcl5' ? 'PCL5' : 'PHQ9',
+        raw_responses: data,
+        completed_at: new Date().toISOString()
       }
 
-      await submitAssessment(assessmentData)
+      // Encrypt assessment data before storage
+      let encryptedData;
+      if (riskLevel === 'crisis' || suicidalThoughts) {
+        // Crisis data gets maximum security
+        const crisisData = {
+          riskLevel,
+          assessmentScores: { pcl5: pcl5Score, phq9: phq9Score },
+          crisisIndicators: crisisValidation.crisisIndicators,
+          interventionActions: ['assessment_crisis_detected', 'immediate_resources_provided']
+        }
+        encryptedData = await crisisSecurity.secureCrisisData(crisisData, user.id)
+      } else {
+        // Standard veteran mental health encryption
+        encryptedData = await encryption.encryptAssessmentData(
+          assessmentData,
+          user.id,
+          currentAssessment === 'pcl5' ? 'PCL5' : 'PHQ9'
+        )
+      }
+
+      // Submit encrypted data to server
+      await submitAssessment(encryptedData)
       
       setResults({
         ...assessmentData,
-        suicidalThoughts
+        suicidalThoughts,
+        encryptionReport: encryption.generateEncryptionReport(encryptedData)
       })
       
       setCurrentAssessment('results')
-      toast.success('Assessment completed successfully')
+      toast.success('Assessment completed and securely stored')
       
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error submitting assessment:', error)
       toast.error('Error submitting assessment. Please try again.')
     } finally {

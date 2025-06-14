@@ -2,6 +2,8 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 import { User, Session } from '@supabase/supabase-js'
 import toast from 'react-hot-toast'
 import { supabase } from '../lib/supabase'
+import VeteranSecureEncryption from '../lib/veteran-encryption'
+import VeteranHIPAACompliance from '../lib/hipaa-compliance'
 
 interface AuthContextType {
   user: User | null
@@ -27,6 +29,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
+  
+  // Initialize security systems
+  const encryption = new VeteranSecureEncryption()
+  const hipaaCompliance = new VeteranHIPAACompliance()
 
   useEffect(() => {
     // Get initial session
@@ -123,16 +129,36 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signIn = async (email: string, password: string) => {
     try {
       setLoading(true)
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
 
       if (error) {
+        // Log failed authentication attempt for HIPAA compliance
+        await hipaaCompliance.logVeteranAccess({
+          eventType: 'data_access',
+          veteranId: email, // Use email as identifier for failed attempts
+          classification: 'PHI',
+          outcome: 'failure',
+          riskLevel: 'medium'
+        })
         throw error
       }
 
-      toast.success('Welcome back!')
+      if (data.user) {
+        // Log successful veteran authentication for HIPAA compliance
+        await hipaaCompliance.logVeteranAccess({
+          eventType: 'data_access',
+          veteranId: data.user.id,
+          classification: 'PHI',
+          outcome: 'success',
+          riskLevel: 'low',
+          sessionId: data.session?.access_token || 'unknown'
+        })
+
+        toast.success('Welcome back!')
+      }
     } catch (error: any) {
       toast.error(error.message || 'Error signing in')
       throw error
