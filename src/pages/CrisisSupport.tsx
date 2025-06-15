@@ -11,70 +11,71 @@ import {
 
 const CRISIS_RESOURCES = [
   {
-    id: 'veterans-crisis-line',
-    name: 'Veterans Crisis Line',
-    phone: '988',
-    extension: 'Press 1',
-    text: '838255',
-    website: 'https://www.veteranscrisisline.net/',
-    description: 'Free, confidential support for Veterans in crisis and their families and friends.',
+    id: 'vac-crisis-line',
+    name: 'Veterans Affairs Canada Crisis Line',
+    phone: '1-800-268-7708',
+    extension: '',
+    text: '',
+    website: 'https://www.veterans.gc.ca',
+    description: 'Free, confidential 24/7 crisis support for Canadian Veterans and their families.',
     available: '24/7',
     veteran_specific: true,
-    features: ['Crisis counseling', 'Suicide prevention', 'Family support', 'Chat available']
+    features: ['Crisis counseling', 'Suicide prevention', 'Family support', 'Canadian VAC services']
   },
   {
-    id: 'military-family-life',
-    name: 'Military Family Life Counselors',
-    phone: '1-800-342-9647',
-    description: 'Non-medical counseling support for military families.',
-    available: 'Business hours',
-    veteran_specific: true,
-    features: ['Family counseling', 'Deployment support', 'Relationship guidance']
-  },
-  {
-    id: 'give-hour',
-    name: 'Give an Hour',
-    website: 'https://giveanhour.org/',
-    description: 'Free mental health services for military personnel, veterans, and their families.',
-    available: 'Varies by provider',
-    veteran_specific: true,
-    features: ['Free therapy', 'Provider matching', 'Specialized care']
-  },
-  {
-    id: 'samhsa',
-    name: 'SAMHSA National Helpline',
-    phone: '1-800-662-4357',
-    description: 'Treatment referral and information service for mental health and substance use disorders.',
+    id: 'canada-suicide-prevention',
+    name: 'Canada Suicide Prevention Service',
+    phone: '1-833-456-4566',
+    description: 'National suicide prevention service available to all Canadians.',
     available: '24/7',
     veteran_specific: false,
-    features: ['Treatment referrals', 'Information services', 'Substance abuse support']
+    features: ['Crisis counseling', 'Suicide prevention', 'Text support', 'Available in French']
+  },
+  {
+    id: 'osiss-support',
+    name: 'OSISS (Operational Stress Injury Social Support)',
+    phone: '1-800-883-6094',
+    website: 'https://www.veterans.gc.ca/eng/health-support/mental-health-wellness/understand-mental-health/osiss',
+    description: 'Peer support network for Canadian military members, veterans, and their families.',
+    available: 'Varies by location',
+    veteran_specific: true,
+    features: ['Peer support', 'Family programs', 'Group sessions', 'Professional referrals']
+  },
+  {
+    id: 'emergency-services',
+    name: 'Emergency Services',
+    phone: '911',
+    description: 'Immediate emergency response for life-threatening situations.',
+    available: '24/7',
+    veteran_specific: false,
+    features: ['Emergency response', 'Paramedics', 'Police', 'Fire services']
   }
 ]
 
 const IMMEDIATE_ACTIONS = [
   {
-    title: 'Call 988',
-    subtitle: 'Press 1 for Veterans',
-    description: 'Speak with a trained crisis counselor who understands military culture',
-    action: () => window.location.href = 'tel:988',
+    title: 'Call VAC Crisis Line',
+    subtitle: '1-800-268-7708',
+    description: 'Speak with a trained crisis counselor who understands Canadian military culture',
+    action: () => window.location.href = 'tel:1-800-268-7708',
     color: 'bg-crisis-600 hover:bg-crisis-700',
     icon: PhoneIcon
   },
   {
-    title: 'Text Crisis Line',
-    subtitle: 'Text 838255',
-    description: 'Text with a crisis counselor if calling feels too difficult',
-    action: () => window.location.href = 'sms:838255',
-    color: 'bg-military-600 hover:bg-military-700',
-    icon: ChatBubbleLeftRightIcon
+    title: 'Call 911',
+    subtitle: 'Emergency Services',
+    description: 'For immediate life-threatening emergencies',
+    action: () => window.location.href = 'tel:911',
+    color: 'bg-red-600 hover:bg-red-700',
+    icon: PhoneIcon
   },
   {
-    title: 'Start Crisis Chat',
-    subtitle: 'Online support',
-    description: 'Chat online with a trained counselor in real-time',
-    action: () => window.open('https://www.veteranscrisisline.net/get-help-now/chat/', '_blank'),
+    title: 'Canada Suicide Prevention',
+    subtitle: '1-833-456-4566',
+    description: 'National crisis line available 24/7 in English and French',
+    action: () => window.location.href = 'tel:1-833-456-4566',
     color: 'bg-honor-600 hover:bg-honor-700',
-    icon: ChatBubbleLeftRightIcon
+    icon: PhoneIcon
   }
 ]
 
@@ -101,7 +102,7 @@ const SAFETY_PLANNING = [
     step: 4,
     title: 'Contact Professionals',
     description: 'Mental health professionals or agencies to contact during a crisis',
-    examples: ['Veterans Crisis Line', 'VA Mental Health', 'Local emergency services']
+    examples: ['VAC Crisis Line', 'Canadian Mental Health', 'Local emergency services']
   },
   {
     step: 5,
@@ -125,10 +126,10 @@ export default function CrisisSupport() {
               you're not alone. Help is available right now.
             </p>
             <div className="bg-crisis-700 rounded-lg p-6 max-w-2xl mx-auto">
-              <p className="text-lg font-medium mb-2">🇺🇸 For Veterans in Crisis</p>
+              <p className="text-lg font-medium mb-2">🍁 For Canadian Veterans in Crisis</p>
               <p className="text-crisis-100">
-                The Veterans Crisis Line connects you with caring, qualified responders 
-                who understand military culture and veteran experiences.
+                Veterans Affairs Canada Crisis Line connects you with caring, qualified responders 
+                who understand Canadian military culture and veteran experiences.
               </p>
             </div>
           </div>
