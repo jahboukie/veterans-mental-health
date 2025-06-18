@@ -851,7 +851,7 @@ export default function PitchDeck() {
                   <h4 className="font-semibold mb-2">Family Dashboard</h4>
                   <p className="text-sm text-gray-600 mb-3">Real-time veteran status monitoring</p>
                   <a
-                    href="http://localhost:3015"
+                    href="https://family.veteransupport.ca"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center px-4 py-2 bg-honor-600 text-white rounded-lg hover:bg-honor-700 transition-colors"
