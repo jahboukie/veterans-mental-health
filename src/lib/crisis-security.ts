@@ -3,6 +3,7 @@
  * Special protection for veteran suicide risk and crisis data
  */
 
+import CryptoJS from 'crypto-js';
 import VeteranSecureEncryption, { VeteranCrisisData, VeteranEncryptedData } from './veteran-encryption';
 import VeteranHIPAACompliance from './hipaa-compliance';
 
@@ -302,9 +303,8 @@ export class CrisisSecurityProtocol {
    * Hash veteran ID for logging
    */
   private hashVeteranId(veteranId: string): string {
-    // Use same hashing as HIPAA compliance
-    const crypto = require('crypto');
-    return crypto.createHash('sha256').update(`veteran_${veteranId}`).digest('hex');
+    // Use same hashing as HIPAA compliance - browser compatible
+    return CryptoJS.SHA256(`veteran_${veteranId}`).toString();
   }
 
   /**
