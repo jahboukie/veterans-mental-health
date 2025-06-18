@@ -20,6 +20,7 @@ import Resources from './pages/Resources'
 import Profile from './pages/Profile'
 import FamilySupport from './pages/FamilySupport'
 import ProviderNetwork from './pages/ProviderNetwork'
+import PitchDeck from './pages/PitchDeck'
 
 // Development components
 import DevBypass from './components/DevBypass'
@@ -37,6 +38,7 @@ function App() {
                 <Route path="/" element={<Landing />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/crisis" element={<CrisisSupport />} />
+                <Route path="/pitch-deck" element={<PitchDeck />} />
 
                 {/* Development routes */}
                 <Route path="/dev" element={<DevBypass />} />
