@@ -1,4 +1,4 @@
-# VetSupport - Veterans Mental Health Platform
+# VeteranSupport - Veterans Mental Health Platform
 
 A specialized mental health support platform designed specifically for military veterans and their families, featuring veteran-specific assessments, AI companion support, and crisis intervention protocols.
 
@@ -127,8 +127,8 @@ A specialized mental health support platform designed specifically for military 
 
 ### Option 1: Demo Login (Full Authentication Flow)
 - **URL:** http://localhost:3014/auth
-- **Email:** `demo.veteran@vetsupport.com`
-- **Password:** `VetSupport2024!`
+- **Email:** `demo.veteran@veteransupport.com`
+- **Password:** `VeteranSupport2024!`
 - **Features:** Complete authentication, onboarding, and Supabase integration
 
 ### Option 2: Development Bypass (No Authentication)

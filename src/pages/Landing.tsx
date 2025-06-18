@@ -21,7 +21,7 @@ export default function Landing() {
               <ShieldCheckIcon className="h-16 w-16 text-white" />
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              VetSupport
+              VeteranSupport
             </h1>
             <p className="text-xl md:text-2xl text-military-100 mb-8 max-w-3xl mx-auto">
               Specialized mental health support designed by veterans, for veterans. 
@@ -171,7 +171,7 @@ export default function Landing() {
             <div className="flex justify-center mb-4">
               <ShieldCheckIcon className="h-8 w-8 text-military-400" />
             </div>
-            <h3 className="text-lg font-semibold mb-2">VetSupport</h3>
+            <h3 className="text-lg font-semibold mb-2">VeteranSupport</h3>
             <p className="text-gray-400 mb-4">
               Honoring your service by supporting your mental health journey.
             </p>

@@ -37,7 +37,7 @@ export default function PitchDeck() {
           <div className="space-y-4">
             <div className="flex items-center justify-center space-x-4 mb-6">
               <img src="/maple-leaf.svg" alt="Canada" className="h-12 w-12 text-red-600" />
-              <h1 className="text-5xl font-bold text-gray-900">VetSupport.ca</h1>
+              <h1 className="text-5xl font-bold text-gray-900">VeteranSupport.ca</h1>
               <ShieldCheckIcon className="h-12 w-12 text-military-600" />
             </div>
             <h2 className="text-3xl font-semibold text-military-700">
@@ -902,7 +902,7 @@ export default function PitchDeck() {
             <div className="text-center mt-8">
               <div className="text-lg font-semibold mb-2">Contact Information</div>
               <div className="text-sm opacity-90">
-                Email: partnerships@vetsupport.ca | Phone: +1 (613) 555-VETS
+                Email: partnerships@veteransupport.ca | Phone: +1 (613) 555-VETS
               </div>
             </div>
           </div>
@@ -952,7 +952,7 @@ export default function PitchDeck() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <ShieldCheckIcon className="h-8 w-8 text-military-600" />
-              <h1 className="text-2xl font-bold text-gray-900">VetSupport.ca - Investor Brief</h1>
+              <h1 className="text-2xl font-bold text-gray-900">VeteranSupport.ca - Investor Brief</h1>
             </div>
             <div className="flex items-center space-x-4">
               <span className="text-sm text-gray-500">
