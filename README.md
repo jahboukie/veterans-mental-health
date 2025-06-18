@@ -192,7 +192,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 📞 Support
 
 For technical support or questions:
-- Email: team.mobileweb@gmail.com
+- **Jeremy Brown** - Project Lead
+- Email: jeremyjaybrown@gmail.com | Phone: +1 (647) 880-1210
 - GitHub Issues: [Create an issue](https://github.com/jahboukie/veterans-mental-health/issues)
 
 For mental health crisis support:

@@ -902,7 +902,8 @@ export default function PitchDeck() {
             <div className="text-center mt-8">
               <div className="text-lg font-semibold mb-2">Contact Information</div>
               <div className="text-sm opacity-90">
-                Email: partnerships@veteransupport.ca | Phone: +1 (613) 555-VETS
+                <div className="mb-1"><strong>Jeremy Brown</strong> - Project Lead</div>
+                <div>Email: jeremyjaybrown@gmail.com | Phone: +1 (647) 880-1210</div>
               </div>
             </div>
           </div>
